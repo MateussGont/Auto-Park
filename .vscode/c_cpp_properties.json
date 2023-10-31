@@ -8,9 +8,9 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/ESP32/ESP32_Sensor/include",
-                "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/ESP32/ESP32_Sensor/src",
-                "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/ESP32/ESP32_Sensor/lib/vl53l0x-arduino",
+                "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/Auto-Park/include",
+                "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/Auto-Park/src",
+                "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/Auto-Park/lib/vl53l0x-arduino",
                 "C:/Users/mateu/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                 "C:/Users/mateu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
                 "C:/Users/mateu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include",
@@ -239,9 +239,9 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/ESP32/ESP32_Sensor/include",
-                    "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/ESP32/ESP32_Sensor/src",
-                    "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/ESP32/ESP32_Sensor/lib/vl53l0x-arduino",
+                    "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/Auto-Park/include",
+                    "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/Auto-Park/src",
+                    "c:/Users/mateu/Desktop/Faculdade/Sistemas Embarcados/Projetos/Auto-Park/lib/vl53l0x-arduino",
                     "C:/Users/mateu/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                     "C:/Users/mateu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
                     "C:/Users/mateu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include",
