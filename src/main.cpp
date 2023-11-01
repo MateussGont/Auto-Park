@@ -1,6 +1,15 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include "VL53L0X.h"
+
+// Pipeline para entrar na vaga 180°
+#define PRONTO 0       // botão start apertado e inicio dos sensores
+#define CALIBRANDO 1   // sensor traseiro identifica o inicio do carro ao lado e quando encontrado inicia o proximo estágio
+#define VOL_DIREITA 2  // Volante se vira todo para a direita e é feito uma medição de distancia percorrida
+#define VOL_CENTRO 3   // apoós uma certa distancia percorrida o volante volta ao centro e anda mais uma certa distancia
+#define VOL_ESQUERDA 4 // após identificado outra distancia percorrida se passa para o proximo estágio
+#define VOL_INICIAL 5  // volante volta ao centro e usuário termina com ajustes finos
+
 TwoWire I2Cone = TwoWire(0);
 VL53L0X sensor;
 VL53L0X sensor2;
@@ -19,8 +28,8 @@ void setup()
   digitalWrite(16, HIGH);
   delay(100);
   Wire.begin();
-  //I2Cone.begin(21, 22, 921600); // Configuração de pinos para I2C gpio 21 e 22
-  //sensor.setBus(&I2Cone);       // Leitor do sensor configurado para o barramento de entrada I2C
+  // I2Cone.begin(21, 22, 921600); // Configuração de pinos para I2C gpio 21 e 22
+  // sensor.setBus(&I2Cone);       // Leitor do sensor configurado para o barramento de entrada I2C
 
   sensor.setTimeout(50);
   if (!sensor.init())
@@ -53,15 +62,21 @@ void setup()
 
 void loop()
 {
-  uint16_t dist1 =sensor.readRangeContinuousMillimeters();
-  if (sensor.timeoutOccurred()) { Serial.print(" TIMEOUT"); }
-  
+  uint16_t dist1 = sensor.readRangeContinuousMillimeters();
+  if (sensor.timeoutOccurred())
+  {
+    Serial.print(" TIMEOUT");
+  }
+
   uint16_t dist2 = sensor2.readRangeContinuousMillimeters();
-  if (sensor2.timeoutOccurred()) { Serial.print(" TIMEOUT"); }
+  if (sensor2.timeoutOccurred())
+  {
+    Serial.print(" TIMEOUT");
+  }
 
   Serial.print("Sensor 1: ");
   Serial.print(dist1);
-  
+
   Serial.print("\tSensor 2: ");
   Serial.println(dist2);
 
