@@ -8,15 +8,27 @@ uint16_t valor;
 void setup()
 {
   Serial.begin(921600);
-  I2Cone.begin(21,22,921600); // Configuração de pinos para I2C gpio 21 e 22
-  sensor.setBus(&I2Cone);     //Leitor do sensor configurado para o barramento de entrada I2C
+  pinMode(16, OUTPUT);
+  pinMode(17, OUTPUT);
+  delay(100);
+  digitalWrite(16, LOW);
+  delay(100);
+  digitalWrite(17, LOW);
+  delay(100);
+  digitalWrite(17, HIGH);
+  delay(100);
+  I2Cone.begin(21, 22, 921600); // Configuração de pinos para I2C gpio 21 e 22
+  sensor.setBus(&I2Cone);       // Leitor do sensor configurado para o barramento de entrada I2C
 
   sensor.setTimeout(50);
   if (!sensor.init())
   {
     Serial.println("Failed to detect and initialize sensor!");
-    while (1) {}
+    while (1)
+    {
+    }
   }
+  sensor.setAddress((uint8_t)22);
 
   // Start continuous back-to-back mode (take readings as
   // fast as possible).  To use continuous timed mode
@@ -28,9 +40,12 @@ void setup()
 void loop()
 {
   delay(100);
-  valor= sensor.readRangeContinuousMillimeters();
+  valor = sensor.readRangeContinuousMillimeters();
   Serial.println(valor);
-  if (sensor.timeoutOccurred()) { Serial.print(" TIMEOUT"); }
+  if (sensor.timeoutOccurred())
+  {
+    Serial.print(" TIMEOUT");
+  }
 
   Serial.println();
 }
