@@ -3,17 +3,23 @@
 #include "VL53L0X.h"
 
 // Pipeline para entrar na vaga 180°
-#define PRONTO 0       // botão start apertado e inicio dos sensores
-#define CALIBRANDO 1   // sensor traseiro identifica o inicio do carro ao lado e quando encontrado inicia o proximo estágio
-#define VOL_DIREITA 2  // Volante se vira todo para a direita e é feito uma medição de distancia percorrida
-#define VOL_CENTRO 3   // apoós uma certa distancia percorrida o volante volta ao centro e anda mais uma certa distancia
-#define VOL_ESQUERDA 4 // após identificado outra distancia percorrida se passa para o proximo estágio
-#define VOL_INICIAL 5  // volante volta ao centro e usuário termina com ajustes finos
+#define PRONTO 0     // botão start apertado e inicio dos sensores
+#define CALIBRANDO 1 // alinhamento das traseiras dos carros
+#define TURN 2       // Faz a rotação das rodas e anda para trás até atingir um angulo X (Medição a ser feita)
+#define ENTRY 3      // Após estar no angulo alinha as rodas ao centro e anda uma distancia X (Medição a ser feita)
+#define RETURN 4     // após andar a distancia anterior vira as rodas completamente a esquerda e continua a entrada até o sensor de ré apitar
+#define ENDUP 5      // volante volta ao centro e usuário termina com ajustes finos
+#define FINISHED 6   // Para os sensores
 
 TwoWire I2Cone = TwoWire(0);
 VL53L0X sensor;
 VL53L0X sensor2;
 uint16_t valor;
+float scale[2] = {35.0, 22.0}; // passa a largura e comprimento do carro para medição de escala -verificar implementação
+
+void freia_sozinho()
+{
+}
 
 void setup()
 {
