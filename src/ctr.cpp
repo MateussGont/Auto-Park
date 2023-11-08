@@ -21,16 +21,16 @@ public:
         return 0.0;
     }
 
-    // Função para controlar a direção do carro
-    void controlSteering(double angle)
+    // Função para controlar o volante do carro
+    void controlVolante(double angle)
     {
-        // Implementar a lógica para controlar a direção
+        // Implementar a lógica para controlar volante
     }
 
     // Função para controlar a velocidade do carro
     void controlSpeed(double distance)
     {
-        // Implementar a lógica para controlar a velocidade
+        // Implementar lógica para controlar velocidade
     }
 };
 
