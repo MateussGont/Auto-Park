@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "models.h"
+#include <math.h>
 
 class Ctr
 {
@@ -7,8 +8,10 @@ public:
     // Função para calcular a distância que o carro deve percorrer para entrar na vaga
     double calculateDistanceToTravel(Car car, ParkingSpot spot)
     {
-        // Implementar a lógica para calcular a distância
-        return 0.0;
+        // Calcular a distância entre o carro e a vaga de estacionamento
+        double distance = sqrt(pow(spot.length - car.length, 2) + pow(spot.width - car.width, 2));
+
+        return distance;
     }
 
     // Função para calcular o ângulo que o carro deve girar para entrar na vaga

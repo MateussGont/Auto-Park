@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include "VL53L0X.h"
+#include "models.h"
 
 // Pipeline para entrar na vaga 180°
 #define PRONTO 0     // botão start apertado e inicio dos sensores
@@ -11,6 +12,9 @@
 #define ENDUP 5      // volante volta ao centro e usuário termina com ajustes finos
 #define FINISHED 6   // Para os sensores
 
+int state;
+Car carro = createCar(5.1, 2.3, 2.1);
+// ParkingSpot spot = createParkingSpot();
 TwoWire I2Cone = TwoWire(0);
 VL53L0X sensor;
 VL53L0X sensor2;
@@ -78,6 +82,34 @@ void loop()
   if (sensor2.timeoutOccurred())
   {
     Serial.print(" TIMEOUT");
+  }
+
+  // States
+  switch (state)
+  {
+  case PRONTO:
+    /* code */
+    break;
+  case CALIBRANDO:
+    /* code */
+    break;
+  case TURN:
+    /* code */
+    break;
+  case ENTRY:
+    /* code */
+    break;
+  case RETURN:
+    /* code */
+    break;
+  case ENDUP:
+    /* code */
+    break;
+  case FINISHED:
+    /* code */
+    break;
+  default:
+    break;
   }
 
   Serial.print("Sensor 1: ");
