@@ -66,8 +66,8 @@ void setup()
   // fast as possible).  To use continuous timed mode
   // instead, provide a desired inter-measurement period in
   // ms (e.g. sensor.startContinuous(100)).
-  sensor.startContinuous();
-  sensor2.startContinuous();
+  sensor.startContinuous(100);
+  sensor2.startContinuous(100);
 }
 
 void loop()
@@ -88,25 +88,25 @@ void loop()
   switch (state)
   {
   case PRONTO:
-    /* code */
+    // se sinal de pronto tiver sido enviado muda estado para calibrando
     break;
   case CALIBRANDO:
-    /* code */
+    // após passar uma vaga de um certo tamanho passa para proximo estágio
     break;
   case TURN:
-    /* code */
+    // Inicia a rotação das rotas até que o carro atinja angulo necessário (A ser testado) para proximo estágio
     break;
   case ENTRY:
-    /* code */
+    // retorna as rodas e inicia o movimento de entrada na vaga até percorrer uma certa distancia
     break;
   case RETURN:
-    /* code */
+    // faz a rotação das rodas para o lado oposto e continua entrada
     break;
   case ENDUP:
-    /* code */
+    // termina de ajustar o carro  na vaga caso seja necessário
     break;
   case FINISHED:
-    /* code */
+    // Termina a vaga e os sensores são desativados
     break;
   default:
     break;
