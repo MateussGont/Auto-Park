@@ -2,18 +2,21 @@
 #include <Wire.h>
 #include "VL53L0X.h"
 #include "models.h"
+#include "ctr.h"
 
 // Pipeline para entrar na vaga 180°
-#define PRONTO 0     // botão start apertado e inicio dos sensores
-#define CALIBRANDO 1 // alinhamento das traseiras dos carros
+#define CALIBRANDO 0 // alinhamento das traseiras dos carros
+#define INIT 1       // botão start apertado e inicio dos sensores
 #define TURN 2       // Faz a rotação das rodas e anda para trás até atingir um angulo X (Medição a ser feita)
 #define ENTRY 3      // Após estar no angulo alinha as rodas ao centro e anda uma distancia X (Medição a ser feita)
 #define RETURN 4     // após andar a distancia anterior vira as rodas completamente a esquerda e continua a entrada até o sensor de ré apitar
 #define ENDUP 5      // volante volta ao centro e usuário termina com ajustes finos
 #define FINISHED 6   // Para os sensores
 
-int state;
+int state = INIT;
+bool initPark = false;
 Car carro = createCar(5.1, 2.3, 2.1);
+Ctr States;
 // ParkingSpot spot = createParkingSpot();
 TwoWire I2Cone = TwoWire(0);
 VL53L0X sensor;
@@ -85,38 +88,47 @@ void loop()
   }
 
   // States
-  switch (state)
+  if (initPark)
   {
-  case PRONTO:
-    // se sinal de pronto tiver sido enviado muda estado para calibrando
-    break;
-  case CALIBRANDO:
-    // após passar uma vaga de um certo tamanho passa para proximo estágio
-    break;
-  case TURN:
-    // Inicia a rotação das rotas até que o carro atinja angulo necessário (A ser testado) para proximo estágio
-    break;
-  case ENTRY:
-    // retorna as rodas e inicia o movimento de entrada na vaga até percorrer uma certa distancia
-    break;
-  case RETURN:
-    // faz a rotação das rodas para o lado oposto e continua entrada
-    break;
-  case ENDUP:
-    // termina de ajustar o carro  na vaga caso seja necessário
-    break;
-  case FINISHED:
-    // Termina a vaga e os sensores são desativados
-    break;
-  default:
-    break;
+    switch (state)
+    {
+    case CALIBRANDO:
+      // após passar uma vaga de um certo tamanho passa para proximo estágio
+      break;
+    case INIT:
+      // se sinal de pronto tiver sido enviado muda estado para calibrando
+      Serial.print("Alinhe seu automóvel...");
+      if (States.setInitialPosition(dist1, dist2))
+      {
+        Serial.print("Posicionamento concluído.");
+        state = States.setState(state);
+      }
+      break;
+    case TURN:
+      // Inicia a rotação das rotas até que o carro atinja angulo necessário (A ser testado) para proximo estágio
+      break;
+    case ENTRY:
+      // retorna as rodas e inicia o movimento de entrada na vaga até percorrer uma certa distancia
+      break;
+    case RETURN:
+      // faz a rotação das rodas para o lado oposto e continua entrada
+      break;
+    case ENDUP:
+      // termina de ajustar o carro  na vaga caso seja necessário
+      break;
+    case FINISHED:
+      // Termina a vaga e os sensores são desativados
+      break;
+    default:
+
+      break;
+    }
   }
-
-  Serial.print("Sensor 1: ");
-  Serial.print(dist1);
-
-  Serial.print("\tSensor 2: ");
-  Serial.println(dist2);
+  if (dist1 < 45 || dist2 < 45)
+  {
+    Serial.print("Atenção, risco de colisão! \n");
+    Serial.print(dist1, dist2);
+  }
 
   delay(100);
 }
