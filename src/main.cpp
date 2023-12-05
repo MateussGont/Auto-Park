@@ -11,8 +11,11 @@
 #define VOL_INICIAL 5  // volante volta ao centro e usuário termina com ajustes finos
 
 TwoWire I2Cone = TwoWire(0);
-VL53L0X sensor;
-VL53L0X sensor2;
+VL53L0X sensor_direita_frente;
+VL53L0X sensor_direita_tras;
+VL53L0X sensor_traseiro;
+VL53L0X sensor_esquerda_frente;
+VL53L0X sensor_esquerda_tras;
 uint16_t valor;
 
 void setup()
@@ -31,19 +34,19 @@ void setup()
   // I2Cone.begin(21, 22, 921600); // Configuração de pinos para I2C gpio 21 e 22
   // sensor.setBus(&I2Cone);       // Leitor do sensor configurado para o barramento de entrada I2C
 
-  sensor.setTimeout(50);
-  if (!sensor.init())
+  sensor_direita_frente.setTimeout(50);
+  if (!sensor_direita_frente.init())
   {
     Serial.println("Failed to detect and initialize sensor 1!");
     while (1)
     {
     }
   }
-  sensor.setAddress((uint8_t)22);
+  sensor_direita_frente.setAddress((uint8_t)22);
   delay(100);
   digitalWrite(17, HIGH);
 
-  if (!sensor2.init())
+  if (!sensor_direita_tras.init())
   {
     Serial.println("Failed to detect and initialize sensor 2!");
     while (1)
@@ -51,25 +54,25 @@ void setup()
     }
   }
 
-  sensor2.setAddress((uint8_t)25);
+  sensor_direita_tras.setAddress((uint8_t)25);
   // Start continuous back-to-back mode (take readings as
   // fast as possible).  To use continuous timed mode
   // instead, provide a desired inter-measurement period in
   // ms (e.g. sensor.startContinuous(100)).
-  sensor.startContinuous();
-  sensor2.startContinuous();
+  sensor_direita_frente.startContinuous();
+  sensor_direita_tras.startContinuous();
 }
 
 void loop()
 {
-  uint16_t dist1 = sensor.readRangeContinuousMillimeters();
-  if (sensor.timeoutOccurred())
+  uint16_t dist1 = sensor_direita_frente.readRangeContinuousMillimeters();
+  if (sensor_direita_frente.timeoutOccurred())
   {
     Serial.print(" TIMEOUT");
   }
 
-  uint16_t dist2 = sensor2.readRangeContinuousMillimeters();
-  if (sensor2.timeoutOccurred())
+  uint16_t dist2 = sensor_direita_tras.readRangeContinuousMillimeters();
+  if (sensor_direita_tras.timeoutOccurred())
   {
     Serial.print(" TIMEOUT");
   }
