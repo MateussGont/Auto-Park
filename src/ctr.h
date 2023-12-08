@@ -18,7 +18,9 @@ public:
     // Função para controlar a velocidade do carro
     void controlSpeed(double distance);
 
-    bool setInitialPosition(int dist1, int dist2);
+    bool setInitialPositionLeft(int dist1, int dist2);
+
+    bool setInitialPositionRight(int dist1, int dist2);
 
     int setState(int state);
 };

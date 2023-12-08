@@ -33,7 +33,16 @@ public:
         // Implementar lógica para controlar velocidade
     }
 
-    bool setInitialPosition(int frontDist, int backDist)
+    bool setInitialPositionLeft(int frontDist, int backDist)
+    {
+        if ((frontDist >= 45 && frontDist <= 50) && (backDist >= 45 && backDist <= 50))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool setInitialPositionRight(int frontDist, int backDist)
     {
         if ((frontDist >= 45 && frontDist <= 50) && (backDist >= 45 && backDist <= 50))
         {
