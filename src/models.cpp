@@ -4,12 +4,11 @@
 
 typedef struct
 {
-    double length;
-    double width;
+    double largura;
+    double comprimento;
     double wheelbase;
     double wheelradius;
-    VL53L0X sensor;
-    VL53L0X sensor2;
+    VL53L0X sensor_DF, sensor_EF, sensor_DT, sensor_ET, sensor_CT;
     double velocity;
 } Car;
 
@@ -20,11 +19,11 @@ typedef struct
 } ParkingSpot;
 
 // Função para inicializar um Car
-Car createCar(double length, double width, double wheelbase)
+Car createCar(double comprimento, double largura, double wheelbase)
 {
     Car car;
-    car.length = length;
-    car.width = width;
+    car.largura = largura;
+    car.comprimento = comprimento;
     car.wheelbase = wheelbase;
     return car;
 }

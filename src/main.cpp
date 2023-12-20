@@ -2,27 +2,64 @@
 #include <Wire.h>
 #include "VL53L0X.h"
 #include "models.h"
+#include "stdlib.h"
+
+// definições de direção
+#define LEFT 0
+#define RIGHT 1
+#define FOWARD 2
+#define BACK 3
+
+// Definições de alerta
+#define OK 0
+#define DANGER -1
+#define SAFE 1
 
 // Pipeline para entrar na vaga 180°
-#define PRONTO 0     // botão start apertado e inicio dos sensores
-#define CALIBRANDO 1 // alinhamento das traseiras dos carros
-#define TURN 2       // Faz a rotação das rodas e anda para trás até atingir um angulo X (Medição a ser feita)
-#define ENTRY 3      // Após estar no angulo alinha as rodas ao centro e anda uma distancia X (Medição a ser feita)
-#define RETURN 4     // após andar a distancia anterior vira as rodas completamente a esquerda e continua a entrada até o sensor de ré apitar
-#define ENDUP 5      // volante volta ao centro e usuário termina com ajustes finos
-#define FINISHED 6   // Para os sensores
+#define PROCURANDO -1 // // Botão start apertado e inicio dos sensores
+#define PRONTO 0      // Painel exibe que encontrou uma vaga compativel
+#define CALIBRANDO 1  // alinhamento das traseiras dos carros (Carro encontra momento q a variação da distancia seja repentina)
+#define TURN 2        // Faz a rotação das rodas e anda para trás até atingir um angulo X (Medição a ser feita)
+#define ENTRY 3       // Após estar no angulo alinha as rodas ao centro e anda uma distancia X (Medição a ser feita)
+#define RETURN 4      // após andar a distancia anterior vira as rodas completamente a esquerda e continua a entrada até o sensor de ré apitar
+#define ENDUP 5       // volante volta ao centro e usuário termina com ajustes finos
+#define FINISHED 6    // Para os sensores
 
 int state;
-Car carro = createCar(5.1, 2.3, 2.1);
+Car carro = createCar(160, 70, 68); // carro em mm
 // ParkingSpot spot = createParkingSpot();
 TwoWire I2Cone = TwoWire(0);
 VL53L0X sensor;
 VL53L0X sensor2;
 uint16_t valor;
+uint16_t buffer1, bufffer2, buffer3;
 float scale[2] = {35.0, 22.0}; // passa a largura e comprimento do carro para medição de escala -verificar implementação
+int tipo_vaga = 1;             // tipo da vaga, 1 = 90°, 2 = baliza, 3 = 45°
+int direção;
+/*
+Futuramente será feito um método que freia o carro sozinho
 
+Envia um sinal para que o motor pare
+*/
 void freia_sozinho()
 {
+}
+
+int estaciona_90_graus(VL53L0X sensores)
+{
+  int done = 0;
+  while (done != 1)
+  {
+    switch ()
+    {
+    case /* constant-expression */:
+      /* code */
+      break;
+
+    default:
+      break;
+    }
+  }
 }
 
 /*
@@ -43,14 +80,40 @@ int verfica_sensor(VL53L0X sensor)
   if (dist < 10)
   {
     Serial.print("Cuidado");
+    return DANGER;
   }
   else if (dist >= 10 || dist < 30)
   {
     Serial.print("Distancia Ótima");
+    return OK;
   }
   else if (dist > 30)
   {
     Serial.print("Tranquilo");
+    return SAFE;
+  }
+}
+float read_vaga()
+{
+}
+int verifica_vaga(int tipo)
+{
+  // Implementar Outros tipos de vaga
+  if (tipo == 1)
+  { // Vaga 90°
+    while (sensor.readRangeContinuousMillimeters() < 5000)
+    {
+      Serial.println("Continue a ré");
+    }
+    if (sensor.readRangeContinuousMillimeters() >= 5000)
+    {
+      state++;
+      return 1;
+    }
+    else
+    {
+      return -1;
+    }
   }
 }
 
@@ -120,10 +183,12 @@ void loop()
     // se sinal de pronto tiver sido enviado muda estado para calibrando
     break;
   case CALIBRANDO:
-    // após passar uma vaga de um certo tamanho passa para proximo estágio
+    // Encontra o primeira variação de distancia grande
+    verifica_vaga(tipo_vaga);
     break;
   case TURN:
     // Inicia a rotação das rotas até que o carro atinja angulo necessário (A ser testado) para proximo estágio
+    gira_rodas();
     break;
   case ENTRY:
     // retorna as rodas e inicia o movimento de entrada na vaga até percorrer uma certa distancia
