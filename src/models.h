@@ -1,12 +1,16 @@
 #ifndef MODELS_H_INCLUDED
 #define MODELS_H_INCLUDED
-
+#include <Wire.h>
+#include "VL53L0X.h"
 typedef struct
 {
     double length;
     double width;
     double wheelbase;
     double wheelradius;
+    VL53L0X sensor;
+    VL53L0X sensor2;
+    double velocity;
 } Car;
 
 typedef struct

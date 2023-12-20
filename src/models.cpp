@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <Wire.h>
+#include "VL53L0X.h"
 
 typedef struct
 {
@@ -6,6 +8,9 @@ typedef struct
     double width;
     double wheelbase;
     double wheelradius;
+    VL53L0X sensor;
+    VL53L0X sensor2;
+    double velocity;
 } Car;
 
 typedef struct

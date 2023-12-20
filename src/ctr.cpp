@@ -2,6 +2,8 @@
 #include "models.h"
 #include <math.h>
 
+#define STOP -1
+
 class Ctr
 {
 public:
@@ -12,6 +14,22 @@ public:
         double distance = sqrt(pow(spot.length - car.length, 2) + pow(spot.width - car.width, 2));
 
         return distance;
+    }
+
+    int stopMoving (Car car){
+        int state;
+        if ((car.sensor.readRangeContinuousMillimeters() == 15.0) || (car.sensor2.readRangeContinuousMillimeters() == 15.0))
+        {
+            //lógica para freio emergencial do carrinho
+            return state = STOP;
+        }
+    }
+
+    void lockVelocity(Car car){
+        //car.velocity deve ser setada para um valor fixo para facilitar calculos
+        //A velocidade depende de qual mecanismo será utilizado para o carro se movimentar
+
+
     }
 
     // Função para calcular o ângulo que o carro deve girar para entrar na vaga
@@ -31,6 +49,10 @@ public:
     void controlSpeed(double distance)
     {
         // Implementar lógica para controlar velocidade
+    }
+
+    void center(Car car){
+        
     }
 };
 

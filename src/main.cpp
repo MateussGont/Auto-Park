@@ -25,6 +25,35 @@ void freia_sozinho()
 {
 }
 
+/*
+  Verifica a unidade de medida do sensor
+
+  Posteriormente irá setar tambvem levar a setar
+  o valor de stage do carro em relação a vaga
+
+*/
+int verfica_sensor(VL53L0X sensor)
+{
+  if (sensor.timeoutOccurred())
+  {
+    Serial.print("TIMEOUT");
+  }
+  uint16_t dist = sensor.readRangeContinuousMillimeters();
+
+  if (dist < 10)
+  {
+    Serial.print("Cuidado");
+  }
+  else if (dist >= 10 || dist < 30)
+  {
+    Serial.print("Distancia Ótima");
+  }
+  else if (dist > 30)
+  {
+    Serial.print("Tranquilo");
+  }
+}
+
 void setup()
 {
   Serial.begin(921600);
