@@ -2,7 +2,60 @@
 #include "models.h"
 #include <math.h>
 
-#define STOP -1
+class Ctr
+{
+public:
+    // Função para calcular a distância que o carro deve percorrer para entrar na vaga
+    double calculateDistanceToTravel(Car car, ParkingSpot spot)
+    {
+        // Calcular a distância entre o carro e a vaga de estacionamento
+        double distance = sqrt(pow(spot.length - car.length, 2) + pow(spot.width - car.width, 2));
+
+        return distance;
+    }
+
+    // Função para calcular o ângulo que o carro deve girar para entrar na vaga
+    double calculateAngleToTurn(Car car, ParkingSpot spot)
+    {
+        // Implementar a lógica para calcular o ângulo
+        return 0.0;
+    }
+
+    // Função para controlar o volante do carro
+    void controlVolante(double angle)
+    {
+        // Implementar a lógica para controlar volante
+    }
+
+    // Função para controlar a velocidade do carro
+    void controlSpeed(double distance)
+    {
+        // Implementar lógica para controlar velocidade
+    }
+
+    bool setInitialPositionLeft(int frontDist, int backDist)
+    {
+        if ((frontDist >= 45 && frontDist <= 50) && (backDist >= 45 && backDist <= 50))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool setInitialPositionRight(int frontDist, int backDist)
+    {
+        if ((frontDist >= 45 && frontDist <= 50) && (backDist >= 45 && backDist <= 50))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    int setState(int state)
+    {
+        return state++;
+    }
+};
 
 /*int main()
 {
